@@ -1,0 +1,24 @@
+{
+  "name": "ref",
+  "version": "1.0.0",
+  "description": "node reference\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C",
+  "main": "index.js",
+  "scripts": {
+    "start": "node demo-express",
+    "dev": "nodemon demo-express"
+  },
+  "author": "totoro",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "mongoose": "^7.1.0",
+    "superheroes": "^3.0.0",
+    "supervillains": "^3.1.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
