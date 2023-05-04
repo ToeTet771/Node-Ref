@@ -46,17 +46,17 @@ const Num = mongoose.model('Num', dataSchema);
 
 app.use(bodyParser.urlencoded({extended : true})); //!(3party middleware) assigning bodyparser
 
-app.use((req,res,next) =>{                         //!(middleware) we can log all req before res was sent.but we need next() to run next function
-    console.log(superhero.random());
-    console.log("body : ", req.body);
-    // console.log("method : ", req.method);
-    // console.log("url : ", req.url);
-    // console.log("hostname : ", req.hostname);
-    // console.log("path : ", req.path);
-    // console.log("headers : ", req.headers);
+// app.use((req,res,next) =>{                         //!(middleware) we can log all req before res was sent.but we need next() to run next function
+//     console.log(superhero.random());
+//     console.log("body : ", req.body);
+//     // console.log("method : ", req.method);
+//     // console.log("url : ", req.url);
+//     // console.log("hostname : ", req.hostname);
+//     // console.log("path : ", req.path);
+//     // console.log("headers : ", req.headers);
     
-    next();
-})
+//     next();
+// })
 
 app.use(express.static('public'));                  //!(middleware) 
 
@@ -92,19 +92,33 @@ app.post('/country', (req,res) => {
     const countryName = req.body.country;
     const url = 'https://restcountries.com/v3.1/name/' + countryName ;
 
-    https.get(url, (response) => {                       //!get data from restful api(http)
-        console.log(response.statusCode);
-
-        response.on('data', (data) => {                     
-            const countryData = JSON.parse(data);          //!change raw data to JSON format
-            const capital = countryData[0].capital;
-            const continent = countryData[0].continents;
-
-            res.write('<h1> the capital city is ' + capital + ' </h1>')
-            res.write('<h2> the continent is ' + continent + ' </h2>')
-            res.send();
+    fetch(url)                                              //!getting data from restful api(fetch method)
+        .then(res => res.json())                            //!after fetch the url,we need to change res.json()/text() and return it
+        .then(data => {                                     //!then,from returned JSON, get data object
+            const capital = data[0].capital[0];
+            res.send(`<h1> the capital city is ${capital} </h1>`); 
         })
-    })
+        .catch(err => {                                    //!if we got error fetching url, we get this
+            console.log(err);
+            res.send('there is an error. check the country again!');
+        });
+
+    
+    
+
+    // https.get(url, (response) => {                       //!get data from restful api(http method)
+    //     console.log(response.statusCode);
+
+    //     response.on('data', (data) => {                     
+    //         const countryData = JSON.parse(data);          //!change raw data to JSON format
+    //         const capital = countryData[0].capital;
+    //         const continent = countryData[0].continents;
+
+    //         res.write('<h1> the capital city is ' + capital + ' </h1>')
+    //         res.write('<h2> the continent is ' + continent + ' </h2>')
+    //         res.send();
+    //     })
+    // })
 })
 
 

@@ -55,6 +55,18 @@ const fs = require('fs');
 //         };
 //         console.log(data);
 //     });
+
+// fs.readdir("./node_modules", (err,data) => {
+//     if(err) {
+//         console.log(err)
+//         }else{
+//             console.log(data)
+//         }
+//     });
+
+// const file = fs.readdirSync("./node_modules"); 
+// console.log(file);
+
 //!rename file
 // fs.rename(path.join(__dirname,"/test", 'hello.txt'), 
 // path.join(__dirname,"/test", 'hi.txt'), (err) => {
@@ -109,7 +121,18 @@ const url = require('url');
 
 //!getting event package (buildin package)
 
-//???
+const event = require('events');
+
+const emitter = new event();
+
+emitter.on('tap', (arg) => {    //!make an event listener
+    console.log('tap event ', arg);
+});
+
+
+emitter.emit('tap', {id:1 , url: 'http://'});   //!raise an event with arguments
+
+
 
 //......................................................................................................................................................
 
